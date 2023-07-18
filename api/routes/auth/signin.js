@@ -2,7 +2,7 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const User = mongoose.model("users");
-const { JWT_SECRET_KEY } = require("../config/keys");
+const { JWT_SECRET_KEY } = require("../../config/keys");
 
 const router = express.Router();
 

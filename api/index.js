@@ -12,8 +12,8 @@ require("./models/User");
 require("./models/Blog");
 
 // Auth Routes
-const signInRoute = require("./routes/signin");
-const signUpRoute = require("./routes/signup");
+const signInRoute = require("./routes/auth/signin");
+const signUpRoute = require("./routes/auth/signup");
 
 // Auth Routes
 app.use(signInRoute);
