@@ -23,7 +23,12 @@ router.post("/api/users/signup", async (req, res) => {
     password: hashedPassword,
   });
 
-  res.send(createdUser);
+  res.send(createdUser, {
+    message: "Sign-Up Successful",
+    token: jwt.sign({ id: createdUser._id }, JWT_SECRET_KEY, {
+      expiresIn: "1h",
+    }),
+  });
 });
 
 module.exports = router;
