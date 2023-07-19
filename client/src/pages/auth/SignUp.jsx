@@ -22,12 +22,14 @@ const RegistrationForm = () => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post("http://localhost:5000/api/users/signup", userData);
-      console.log(response.data); // Response from the backend
-    } catch (error) {
-    //   console.error(error);
-    }
+    const response = await axios.post("http://localhost:5000/api/users/signup", userData)
+    console.log(response.data)
+    // try {
+    //   const response = await axios.post("http://localhost:5000/api/users/signup", userData);
+    //   console.log(response.data); // Response from the backend
+    // } catch (error) {
+    // //   console.error(error);
+    // }
   }
 
   return (
