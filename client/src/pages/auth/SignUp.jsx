@@ -4,7 +4,7 @@ import { UserContext } from "../../context/UserContext";
 
 const RegistrationForm = () => {
   // const { dispatch } = useContext(UserContext);
-  const [formData, setFormData] = useState({
+  const [userData, setUserData] = useState({
     username: "",
     password: "",
     confirmPassword: "",
@@ -14,8 +14,8 @@ const RegistrationForm = () => {
   });
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
+    setUserData({
+      ...userData,
       [e.target.name]: e.target.value,
     });
   };
@@ -23,22 +23,12 @@ const RegistrationForm = () => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/users/signup",
-        formData
-      );
-      if (response.status === 200) {
-        // User registration successful
-        // dispatch({ type: "LOGIN", payload: response.data.user });
-        console.log(response.data);
-      } else {
-        // Handle registration error
-        console.error(response.data.error);
-      }
+      const response = await axios.post("http://localhost:5000/api/users/signup", userData);
+      console.log(response.data); // Response from the backend
     } catch (error) {
-      console.error(error);
+    //   console.error(error);
     }
-  };
+  }
 
   return (
     <form onSubmit={handleSignUp}>
@@ -46,42 +36,42 @@ const RegistrationForm = () => {
         type="text"
         placeholder="Username"
         name="username"
-        value={formData.username}
+        value={userData.username}
         onChange={handleChange}
       />
       <input
         type="password"
         placeholder="Password"
         name="password"
-        value={formData.password}
+        value={userData.password}
         onChange={handleChange}
       />
       <input
         type="password"
         placeholder="Confirm Password"
         name="confirmPassword"
-        value={formData.confirmPassword}
+        value={userData.confirmPassword}
         onChange={handleChange}
       />
       <input
         type="email"
         placeholder="Email"
         name="email"
-        value={formData.email}
+        value={userData.email}
         onChange={handleChange}
       />
       <input
         type="text"
         placeholder="First Name"
         name="firstName"
-        value={formData.firstName}
+        value={userData.firstName}
         onChange={handleChange}
       />
       <input
         type="text"
         placeholder="Last Name"
         name="lastName"
-        value={formData.lastName}
+        value={userData.lastName}
         onChange={handleChange}
       />
       <button type="submit">Register</button>
