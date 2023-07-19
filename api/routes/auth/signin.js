@@ -2,6 +2,7 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const User = mongoose.model("users");
+const jwt = require("jsonwebtoken");
 const { JWT_SECRET_KEY } = require("../../config/keys");
 
 const router = express.Router();
@@ -15,7 +16,7 @@ router.post("/api/users/signin", async (req, res) => {
   if (!isMatch) return res.status(400).send({ message: "Incorrect Password" });
 
   res.send({
-    message: "Auth Successful",
+    message: "Login Successful",
     token: jwt.sign({ id: existingUser._id }, JWT_SECRET_KEY, {
       expiresIn: "1h",
     }),
