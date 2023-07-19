@@ -5,7 +5,6 @@ const User = mongoose.model("users");
 const { JWT_SECRET_KEY } = require("../../config/keys");
 
 const router = express.Router();
-
 router.post("/api/users/signin", async (req, res) => {
   const { username, password } = req.body;
 
