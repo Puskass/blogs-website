@@ -1,7 +1,10 @@
-const { hash } = require("bcrypt");
 const express = require("express");
-const router = express.Router();
+const { hash } = require("bcrypt");
+const { JWT_SECRET_KEY } = require("../../config/keys");
+const mongoose = require("mongoose");
+const User = mongoose.model("users");
 
+const router = express.Router();
 router.post("/api/users/signup", async (req, res) => {
   const { username, firstName, lastName, email, password, confirmPassword } = req.body;
 
