@@ -3,7 +3,7 @@ import axios from "axios";
 import { UserContext } from "../../context/UserContext";
 
 const RegistrationForm = () => {
-  const { dispatch } = useContext(UserContext);
+  // const { dispatch } = useContext(UserContext);
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -20,13 +20,17 @@ const RegistrationForm = () => {
     });
   };
 
-  const handleRegistration = async (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/api/register", formData);
+      const response = await axios.post(
+        "http://localhost:5000/api/users/signup",
+        formData
+      );
       if (response.status === 200) {
         // User registration successful
-        dispatch({ type: "LOGIN", payload: response.data.user });
+        // dispatch({ type: "LOGIN", payload: response.data.user });
+        console.log(response.data);
       } else {
         // Handle registration error
         console.error(response.data.error);
@@ -37,7 +41,7 @@ const RegistrationForm = () => {
   };
 
   return (
-    <form onSubmit={handleRegistration}>
+    <form onSubmit={handleSignUp}>
       <input
         type="text"
         placeholder="Username"
