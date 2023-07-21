@@ -29,7 +29,6 @@ const RegistrationForm = () => {
       );
       console.log(response.data);
       // Response from the backend
-      console.log(response.headers);
     } catch (error) {
       console.error(error);
     }
