@@ -1,17 +1,21 @@
-import React, { useContext, useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
-import { UserContext } from "../../context/UserContext";
+import { Link } from "react-router-dom";
+import AuthContext from "../../context/AuthProvider";
 
 const LoginForm = () => {
-  const { dispatch } = useContext(UserContext);
-  const [formData, setFormData] = useState({
+  // const { setAuth } = useContext(AuthContext);
+  const [loginData, setLoginData] = useState({
     username: "",
     password: "",
   });
+  const [token, setToken] = useState(null);
+  const [success, setSuccess] = useState(false);
+  const [loginError, setLoginError] = useState("");
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
+    setLoginData({
+      ...loginData,
       [e.target.name]: e.target.value,
     });
   };
@@ -19,39 +23,59 @@ const LoginForm = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      // Make API request to login user
-      const response = await axios.post("http://localhost:5000/api/users/signin", formData);
-      if (response.ok) {
-        // User login successful
-        console.log(response)
-        // dispatch({ type: "LOGIN", payload: data.user });
-      } else {
-        // Handle login error
-        console.error(error);
-      }
+      const response = await axios.post(
+        "http://localhost:5000/api/users/signin",
+        loginData
+      );
+      console.log(JSON.stringify(response?.data)); // Check the response data for the JWT token
+      setToken(response.data.token);
+      setLoginError("");
+      setLoginData({ username: "", password: "" });
+      setSuccess(true);
     } catch (error) {
       console.error(error);
+      // Show an error message to the user if login fails
+      setLoginError("Invalid username or password. Please try again.");
     }
   };
 
   return (
-    <form onSubmit={handleLogin}>
-      <input
-        type="text"
-        placeholder="Username"
-        name="username"
-        value={formData.username}
-        onChange={handleChange}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        name="password"
-        value={formData.password}
-        onChange={handleChange}
-      />
-      <button type="submit">Login</button>
-    </form>
+    <>
+      {success ? (
+        <section>
+          <h1>You are logged in!</h1>
+          <Link to="/">See blogs!!</Link>
+        </section>
+      ) : (
+        <form onSubmit={handleLogin}>
+          <input
+            type="text"
+            placeholder="Username"
+            name="username"
+            value={loginData.username}
+            onChange={handleChange}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            name="password"
+            value={loginData.password}
+            onChange={handleChange}
+          />
+          <button type="submit">Login</button>
+          {loginError && <p>{loginError}</p>}
+          {!loginError && token && (
+            <p>Hello, {loginData.username}! Welcome back!</p>
+          )}
+          {!loginError && !token && (
+            <p>
+              If you don't have an account, please{" "}
+              <Link to="/signup">sign up here</Link>.
+            </p>
+          )}
+        </form>
+      )}
+    </>
   );
 };
 

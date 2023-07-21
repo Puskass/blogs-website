@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import axios from "axios";
-import { UserContext } from "../../context/UserContext";
+// import { AuthContext } from "../../context/AuthProvider";
 
 const RegistrationForm = () => {
   // const { dispatch } = useContext(UserContext);
@@ -22,15 +22,18 @@ const RegistrationForm = () => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-    // const response = await axios.post("http://localhost:5000/api/users/signup", userData)
-    // console.log(response.data)
     try {
-      const response = await axios.post("http://localhost:5000/api/users/signup", userData);
-      console.log(response.data); // Response from the backend
+      const response = await axios.post(
+        "http://localhost:5000/api/users/signup",
+        userData
+      );
+      console.log(response.data);
+      // Response from the backend
+      console.log(response.headers);
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   return (
     <form onSubmit={handleSignUp}>

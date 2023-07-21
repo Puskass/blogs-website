@@ -6,11 +6,11 @@ import SignInForm from "./pages/auth/SignIn";
 import MyBlogs from "./pages/MyBlogs";
 import Blogs from "./pages/Blogs";
 import NotFound from "./pages/error/NotFound";
-import { UserProvider } from "./context/UserContext";
+import { AuthProvider } from "./context/AuthProvider";
 
 const App = () => {
   return (
-    <UserProvider>
+    <AuthProvider>
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -21,7 +21,7 @@ const App = () => {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
-    </UserProvider>
+    </AuthProvider>
   );
 };
 
