@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const MyBlogs = () => {
-  return (
-    <div>MyBlogs</div>
-  )
-}
+  return <div className="bg-yellow-500">MyBlogs</div>;
+};
 
-export default MyBlogs
+export default MyBlogs;
