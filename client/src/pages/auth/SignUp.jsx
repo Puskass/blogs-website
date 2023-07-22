@@ -7,6 +7,7 @@ const SignUp = () => {
 
   const [formData, setFormData] = useState({
     username: "",
+    email: "",
     password: "",
     confirmPassword: "",
     firstName: "",
@@ -36,7 +37,6 @@ const SignUp = () => {
       setToken(token);
       // Handle successful response, e.g., show a success message or redirect to a different page
       console.log("SignUp Successful:", response.data);
-      console.log(token);
     } catch (error) {
       // Handle error, e.g., show an error message to the user
       console.error("Error signing up:", error);
@@ -44,60 +44,135 @@ const SignUp = () => {
   };
 
   return (
-    <div>
-      <h1>Sign Up</h1>
+    <div className="max-w-sm mx-auto p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      <h1 className="text-2xl font-bold mb-4 dark:text-white">Sign Up</h1>
+
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Username:</label>
+        <div className="relative z-0 w-full mb-6 group">
           <input
             type="text"
             name="username"
-            value={formData.username}
-            onChange={handleInputChange}
+            id="username"
+            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            placeholder=" "
             required
+            autoComplete="off"
+            onChange={handleInputChange}
+            value={formData.username}
           />
+          <label
+            htmlFor="username"
+            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >
+            Username
+          </label>
         </div>
-        <div>
-          <label>Password:</label>
+
+        <div className="grid md:grid-cols-2 md:gap-6">
+          <div className="relative z-0 w-full mb-6 group">
+            <input
+              type="text"
+              name="firstName"
+              id="firstName"
+              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=" "
+              required
+              autoComplete="off"
+              onChange={handleInputChange}
+              value={formData.firstName}
+            />
+            <label
+              htmlFor="firstName"
+              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >
+              First name
+            </label>
+          </div>
+          <div className="relative z-0 w-full mb-6 group">
+            <input
+              type="text"
+              name="lastName"
+              id="lastName"
+              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=" "
+              required
+              autoComplete="off"
+              onChange={handleInputChange}
+              value={formData.lastName}
+            />
+            <label
+              htmlFor="lastName"
+              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >
+              Last name
+            </label>
+          </div>
+        </div>
+
+        <div className="relative z-0 w-full mb-6 group">
+          <input
+            type="email"
+            name="email"
+            id="email"
+            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            placeholder=" "
+            required
+            autoComplete="off"
+            onChange={handleInputChange}
+            value={formData.email}
+          />
+          <label
+            htmlFor="email"
+            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >
+            Email address
+          </label>
+        </div>
+        <div className="relative z-0 w-full mb-6 group">
           <input
             type="password"
             name="password"
-            value={formData.password}
-            onChange={handleInputChange}
+            id="password"
+            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            placeholder=" "
             required
+            autoComplete="off"
+            onChange={handleInputChange}
+            value={formData.password}
           />
+          <label
+            htmlFor="password"
+            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >
+            Password
+          </label>
         </div>
-        <div>
-          <label>Confirm Password:</label>
+        <div className="relative z-0 w-full mb-6 group">
           <input
             type="password"
             name="confirmPassword"
+            id="confirmPassword"
+            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            placeholder=" "
+            required
+            autoComplete="off"
+            onChange={handleInputChange}
             value={formData.confirmPassword}
-            onChange={handleInputChange}
-            required
           />
+          <label
+            htmlFor="confirmPassword"
+            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >
+            Confirm password
+          </label>
         </div>
-        <div>
-          <label>First Name:</label>
-          <input
-            type="text"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Last Name:</label>
-          <input
-            type="text"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <button type="submit">Sign Up</button>
+
+        <button
+          type="submit"
+          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
+          Submit
+        </button>
       </form>
     </div>
   );

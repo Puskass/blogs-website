@@ -6,12 +6,14 @@ import { RenderRoutes } from "./shared/navigation/RenderRoutes";
 
 const App = () => {
   return (
-    <Router>
-      <AuthProvider>
-        <RenderNavigation />
-        <RenderRoutes />
-      </AuthProvider>
-    </Router>
+    <div className="dark:text-white dark:bg-gray-900 h-screen ">
+      <Router>
+        <AuthProvider>
+          <RenderNavigation />
+          <RenderRoutes />
+        </AuthProvider>
+      </Router>
+    </div>
   );
 };
 
