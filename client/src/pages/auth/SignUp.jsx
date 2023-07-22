@@ -1,86 +1,106 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-// import { AuthContext } from "../../context/AuthProvider";
+import { useAuth } from "../../context/AuthContext";
 
-const RegistrationForm = () => {
-  // const { dispatch } = useContext(UserContext);
-  const [userData, setUserData] = useState({
+const SignUp = () => {
+  const { setToken } = useAuth();
+
+  const [formData, setFormData] = useState({
     username: "",
     password: "",
     confirmPassword: "",
-    email: "",
     firstName: "",
     lastName: "",
   });
 
-  const handleChange = (e) => {
-    setUserData({
-      ...userData,
-      [e.target.name]: e.target.value,
-    });
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
   };
 
-  const handleSignUp = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    // Check if passwords match before making the API call
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords don't match. Please try again.");
+      return;
+    }
+
     try {
       const response = await axios.post(
         "http://localhost:5000/api/users/signup",
-        userData
+        formData
       );
-      console.log(response.data);
-      // Response from the backend
+      const { token } = response.data;
+      setToken(token);
+      // Handle successful response, e.g., show a success message or redirect to a different page
+      console.log("SignUp Successful:", response.data);
+      console.log(token);
     } catch (error) {
-      console.error(error);
+      // Handle error, e.g., show an error message to the user
+      console.error("Error signing up:", error);
     }
   };
 
   return (
-    <form onSubmit={handleSignUp}>
-      <input
-        type="text"
-        placeholder="Username"
-        name="username"
-        value={userData.username}
-        onChange={handleChange}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        name="password"
-        value={userData.password}
-        onChange={handleChange}
-      />
-      <input
-        type="password"
-        placeholder="Confirm Password"
-        name="confirmPassword"
-        value={userData.confirmPassword}
-        onChange={handleChange}
-      />
-      <input
-        type="email"
-        placeholder="Email"
-        name="email"
-        value={userData.email}
-        onChange={handleChange}
-      />
-      <input
-        type="text"
-        placeholder="First Name"
-        name="firstName"
-        value={userData.firstName}
-        onChange={handleChange}
-      />
-      <input
-        type="text"
-        placeholder="Last Name"
-        name="lastName"
-        value={userData.lastName}
-        onChange={handleChange}
-      />
-      <button type="submit">Register</button>
-    </form>
+    <div>
+      <h1>Sign Up</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Username:</label>
+          <input
+            type="text"
+            name="username"
+            value={formData.username}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div>
+          <label>Password:</label>
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div>
+          <label>Confirm Password:</label>
+          <input
+            type="password"
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div>
+          <label>First Name:</label>
+          <input
+            type="text"
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div>
+          <label>Last Name:</label>
+          <input
+            type="text"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <button type="submit">Sign Up</button>
+      </form>
+    </div>
   );
 };
 
-export default RegistrationForm;
+export default SignUp;

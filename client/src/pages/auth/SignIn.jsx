@@ -1,89 +1,68 @@
 import React, { useState } from "react";
+import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
 
-const LoginForm = () => {
-  const { setAuth } = useAuth();
+const SignIn = () => {
+  const { setToken } = useAuth();
 
-  const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
-
-  const [loginData, setLoginData] = useState({
+  const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
-  const [token, setToken] = useState(null);
-  const [errorMsg, setErrorMsg] = useState("");
 
-  const handleChange = (e) => {
-    setLoginData({
-      ...loginData,
-      [e.target.name]: e.target.value,
-    });
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
   };
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
     try {
       const response = await axios.post(
         "http://localhost:5000/api/users/signin",
-        loginData
+        formData
       );
-      console.log(response?.data); // Check the response data for the JWT token
-      setToken(response?.data.token); // Check the response data for the JWT token
+      const { token } = response.data;
+      console.log("Received Token:", token);
 
-      const accessToken = response?.data?.token;
-      setLoginData({ username: "", password: "" });
-      setAuth({
-        username: loginData.username,
-        password: loginData.password,
-        accessToken,
-      });
-      navigate(from, { replace: true });
+      setToken(token); // Set the token in the context
+      console.log("Token Set in Context", token);
+
+      localStorage.setItem("token", token);
     } catch (error) {
-      console.error(error);
-      // Show an error message to the user if login fails
-      if (!error?.response) {
-        setErrorMsg("No Server Response");
-      } else if (error.response?.status === 400) {
-        setErrorMsg("Missing Username or Password");
-      } else if (error.response?.status === 401) {
-        setErrorMsg("Unauthorized");
-      } else {
-        setErrorMsg("Login Failed");
-      }
+      console.error("Error signing in:", error);
     }
   };
 
   return (
-    <form onSubmit={handleLogin}>
-      <input
-        type="text"
-        placeholder="Username"
-        name="username"
-        value={loginData.username}
-        onChange={handleChange}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        name="password"
-        value={loginData.password}
-        onChange={handleChange}
-      />
-      <button type="submit">Login</button>
-      {errorMsg && <p>{errorMsg}</p>}
-      {!errorMsg && token && <p>Hello, {loginData.username}! Welcome back!</p>}
-      {!errorMsg && !token && (
-        <p>
-          If you don't have an account, please{" "}
-          <Link to="/signup">sign up here</Link>.
-        </p>
-      )}
-    </form>
+    <div>
+      <h1>Sign In</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Username:</label>
+          <input
+            type="text"
+            name="username"
+            value={formData.username}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div>
+          <label>Password:</label>
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <button type="submit">Sign In</button>
+      </form>
+    </div>
   );
 };
 
-export default LoginForm;
+export default SignIn;
