@@ -26,6 +26,8 @@ app.use(signUpRoute);
 
 // Blog Routes
 app.use(createBlogRoute);
+app.use(viewAllBlogsRoute);
+app.use(viewUserBlogsRoute);
 
 mongoose.connect(keys.mongoURI).then(() => {
   app.listen(5000, () => {
