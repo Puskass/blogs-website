@@ -15,9 +15,17 @@ require("./models/Blog");
 const signInRoute = require("./routes/auth/signin");
 const signUpRoute = require("./routes/auth/signup");
 
+// Blog Routes
+const createBlogRoute = require("./routes/blogs/create-blog");
+const viewAllBlogsRoute = require("./routes/blogs/get-blogs");
+const viewUserBlogsRoute = require("./routes/blogs/get-user-blogs");
+
 // Auth Routes
 app.use(signInRoute);
 app.use(signUpRoute);
+
+// Blog Routes
+app.use(createBlogRoute);
 
 mongoose.connect(keys.mongoURI).then(() => {
   app.listen(5000, () => {
