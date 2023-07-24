@@ -3,7 +3,7 @@ import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
 
 const SignIn = () => {
-  const { setToken } = useAuth();
+  const { authUser } = useAuth();
 
   const [formData, setFormData] = useState({
     username: "",
@@ -25,11 +25,9 @@ const SignIn = () => {
       );
       const { token } = response.data;
       console.log("Received Token:", token);
-
-      setToken(token); // Set the token in the context
+        authUser(token)
       console.log("Token Set in Context", token);
 
-      localStorage.setItem("token", token);
     } catch (error) {
       console.error("Error signing in:", error);
     }

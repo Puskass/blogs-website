@@ -3,7 +3,7 @@ import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
 
 const SignUp = () => {
-  const { setToken } = useAuth();
+  const { authUser } = useAuth();
 
   const [formData, setFormData] = useState({
     username: "",
@@ -34,7 +34,7 @@ const SignUp = () => {
         formData
       );
       const { token } = response.data;
-      setToken(token);
+      authUser(token);
       // Handle successful response, e.g., show a success message or redirect to a different page
       console.log("SignUp Successful:", response.data);
     } catch (error) {
