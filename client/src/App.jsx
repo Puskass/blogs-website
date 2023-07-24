@@ -8,6 +8,7 @@ import MyBlogs from "./pages/MyBlogs";
 import Blogs from "./pages/Blogs";
 import MainNav from "./shared/MainNav";
 import SignOut from "./pages/auth/SignOut";
+import PrivateRoute from "./components/PrivateRoute";
 
 const App = () => {
   return (
@@ -16,12 +17,27 @@ const App = () => {
         <AuthProvider>
           <MainNav />
           <Routes>
-            <Route path="/blogs" element={<Blogs />} />
-            <Route path="/myblogs" element={<MyBlogs />} />
             <Route path="/" element={<Home />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/signout" element={<SignOut />} />
+            {/* Use ProtectedRoute */}
+            <Route
+              path="/blogs"
+              element={
+                <PrivateRoute>
+                  <Blogs />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/myblogs"
+              element={
+                <PrivateRoute>
+                  <MyBlogs />
+                </PrivateRoute>
+              }
+            />
           </Routes>
         </AuthProvider>
       </Router>
