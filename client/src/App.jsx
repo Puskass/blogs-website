@@ -1,14 +1,14 @@
 import React from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
+import MainNav from "./shared/layout/MainNav";
 import SignUp from "./pages/auth/SignUp";
 import SignIn from "./pages/auth/SignIn";
+import SignOut from "./pages/auth/SignOut";
 import Home from "./pages/Home";
+import PrivateRoute from "./components/PrivateRoute";
 import MyBlogs from "./pages/MyBlogs";
 import Blogs from "./pages/Blogs";
-import MainNav from "./shared/MainNav";
-import SignOut from "./pages/auth/SignOut";
-import PrivateRoute from "./components/PrivateRoute";
 
 const App = () => {
   return (

@@ -1,5 +1,5 @@
 import React from "react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import { NavLink } from "react-router-dom";
 
 const NavLinks = () => {
@@ -48,7 +48,9 @@ const NavLinks = () => {
       );
     });
 
-  return <ul className="max-w-xs mx-auto flex justify-evenly py-4">{links}</ul>;
+  return (
+    <ul className="max-w-2xl mx-auto flex justify-evenly py-4">{links}</ul>
+  );
 };
 
 export default NavLinks;
