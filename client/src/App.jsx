@@ -14,7 +14,7 @@ const App = () => {
     <div className="dark:text-white dark:bg-gray-900 h-screen ">
       <Router>
         <AuthProvider>
-            <MainNav />
+          <MainNav />
           <Routes>
             <Route path="/blogs" element={<Blogs />} />
             <Route path="/myblogs" element={<MyBlogs />} />
@@ -22,7 +22,6 @@ const App = () => {
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/signout" element={<SignOut />} />
-
           </Routes>
         </AuthProvider>
       </Router>
