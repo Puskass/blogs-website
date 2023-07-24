@@ -31,20 +31,24 @@ const NavLinks = () => {
       href: "/signup",
     },
     token && {
-        label: "Sign Out",
-        href: "/signout"
-    }
+      label: "Sign Out",
+      href: "/signout",
+    },
   ]
     .filter((link) => link)
     .map(({ label, href }) => {
       return (
-        <NavLink to={href} key={href}>
+        <NavLink
+          to={href}
+          key={href}
+          className="font-bold dark:text-white hover:text-blue-600"
+        >
           <li>{label}</li>
         </NavLink>
       );
     });
 
-  return <ul>{links}</ul>;
+  return <ul className="max-w-xs mx-auto flex justify-evenly py-4">{links}</ul>;
 };
 
 export default NavLinks;

@@ -6,8 +6,10 @@ import { useNavigate } from "react-router-dom";
 const SignUp = () => {
   const { authUser } = useAuth();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
+  const [usernameError, setUsernameError] = useState("");
+  const [message, setMessage] = useState("");
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -38,7 +40,7 @@ const SignUp = () => {
 
     // Check if passwords match before making the API call
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords don't match. Please try again.");
+      setMessage("Passwords don't match. Please try again.");
       return;
     }
 
@@ -47,14 +49,26 @@ const SignUp = () => {
         "http://localhost:5000/api/users/signup",
         formData
       );
-      const { token } = response.data;
+      const { token, message } = response.data;
       authUser(token);
-      // Handle successful response, e.g., show a success message or redirect to a different page
-      console.log("SignUp Successful:", response.data);
+      setMessage(message);
       clearFormData();
-      navigate("/")
+      navigate("/");
     } catch (error) {
-      // Handle error, e.g., show an error message to the user
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        // Check for the specific error message from the server
+        if (error.response.data.message === "Username already in use") {
+          setUsernameError("Username already in use"); // Set the username error message
+        } else {
+          setMessage(error.response.data.message); // Set the error message received from the server
+        }
+      } else {
+        setMessage("An error occurred. Please try again later.");
+      }
       console.error("Error signing up:", error);
     }
   };
@@ -62,6 +76,8 @@ const SignUp = () => {
   return (
     <div className="max-w-sm mx-auto p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <h1 className="text-2xl font-bold mb-4 dark:text-white">Sign Up</h1>
+
+      {message && <div className="text-red-500 mb-4">{message}</div>}
 
       <form onSubmit={handleSubmit}>
         <div className="relative z-0 w-full mb-6 group">
@@ -78,10 +94,13 @@ const SignUp = () => {
           />
           <label
             htmlFor="username"
-            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            className="flex peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
             Username
           </label>
+          {usernameError && (
+            <div className="text-red-500 mb-4">{usernameError}</div>
+          )}
         </div>
 
         <div className="grid md:grid-cols-2 md:gap-6">

@@ -6,8 +6,9 @@ import { useNavigate } from "react-router-dom";
 const SignIn = () => {
   const { authUser } = useAuth();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
+  const [message, setMessage] = useState("");
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -34,13 +35,29 @@ const SignIn = () => {
         formData
       );
       const { token } = response.data;
-      console.log("Received Token:", token);
       authUser(token);
-      console.log("Token Set in Context", token);
-      clearFormData()
-      navigate("/")
+      clearFormData();
+      navigate("/");
     } catch (error) {
+      handleServerError(error);
       console.error("Error signing in:", error);
+    }
+  };
+
+  const handleServerError = (error) => {
+    if (error.response && error.response.data && error.response.data.message) {
+      switch (error.response.data.message) {
+        case "User Not Found":
+          setMessage("User not found. Please check your username.");
+          break;
+        case "Incorrect Password":
+          setMessage("Incorrect password. Please try again.");
+          break;
+        default:
+          setMessage(error.response.data.message);
+      }
+    } else {
+      setMessage("An error occurred. Please try again later.");
     }
   };
 
@@ -49,6 +66,8 @@ const SignIn = () => {
       <h1 className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-white">
         Sign In
       </h1>
+
+      {message && <div className="text-red-500 mb-4">{message}</div>}
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="relative z-0 w-full mb-6 group">
