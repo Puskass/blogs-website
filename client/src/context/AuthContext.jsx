@@ -15,16 +15,10 @@ const AuthProvider = ({ children }) => {
     setToken(token);
   };
 
-  const signOut = () => {
-    // Clear the token from context and localStorage
-    setToken(null);
-    localStorage.removeItem("token");
-  };
-
   console.log("Token:", token);
 
   return (
-    <AuthContext.Provider value={{ token, setToken, signOut, authUser }}>
+    <AuthContext.Provider value={{ token, setToken, authUser }}>
       {children}
     </AuthContext.Provider>
   );

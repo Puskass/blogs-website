@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
   const { authUser } = useAuth();
+
+  const navigate = useNavigate()
 
   const [formData, setFormData] = useState({
     username: "",
@@ -13,6 +16,13 @@ const SignIn = () => {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const clearFormData = () => {
+    setFormData({
+      username: "",
+      password: "",
+    });
   };
 
   const handleSubmit = async (event) => {
@@ -25,9 +35,10 @@ const SignIn = () => {
       );
       const { token } = response.data;
       console.log("Received Token:", token);
-        authUser(token)
+      authUser(token);
       console.log("Token Set in Context", token);
-
+      clearFormData()
+      navigate("/")
     } catch (error) {
       console.error("Error signing in:", error);
     }

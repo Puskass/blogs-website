@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const { authUser } = useAuth();
+
+  const navigate = useNavigate()
 
   const [formData, setFormData] = useState({
     username: "",
@@ -17,6 +20,17 @@ const SignUp = () => {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const clearFormData = () => {
+    setFormData({
+      username: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      firstName: "",
+      lastName: "",
+    });
   };
 
   const handleSubmit = async (event) => {
@@ -37,6 +51,8 @@ const SignUp = () => {
       authUser(token);
       // Handle successful response, e.g., show a success message or redirect to a different page
       console.log("SignUp Successful:", response.data);
+      clearFormData();
+      navigate("/")
     } catch (error) {
       // Handle error, e.g., show an error message to the user
       console.error("Error signing up:", error);
@@ -171,7 +187,7 @@ const SignUp = () => {
           type="submit"
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
-          Submit
+          Sign Up
         </button>
       </form>
     </div>
