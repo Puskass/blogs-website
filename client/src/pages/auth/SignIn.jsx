@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignIn = () => {
   const { authUser } = useAuth();
@@ -117,6 +117,13 @@ const SignIn = () => {
           >
             Sign In
           </button>
+          <p className="mt-4 text-gray-500 dark:text-gray-200">
+            Dont't have an account{" "}
+            <Link to={"/signup"}>
+              {" "}
+              <u> Create one here </u>{" "}
+            </Link>
+          </p>
         </form>
       </div>
     </div>
