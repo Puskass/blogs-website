@@ -11,9 +11,14 @@ const NavLinks = () => {
       href: "/",
     },
 
+    // token && {
+    //   label: "Add Blogs",
+    //   href: "/add-blogs",
+    // },
+
     token && {
-      label: "Blogs",
-      href: "/blogs",
+      label: "Add Blogs",
+      href: "/addblogs",
     },
 
     token && {
